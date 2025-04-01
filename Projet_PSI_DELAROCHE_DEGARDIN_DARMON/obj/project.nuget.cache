@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "2621noQ5Jrc=",
+  "success": false,
+  "projectFilePath": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Le projet VisualisationWPF n'est pas compatible avec net6.0 (.NETCoreApp,Version=v6.0). Le projet VisualisationWPF prend en charge : net6.0-windows7.0 (.NETCoreApp,Version=v6.0)",
+      "libraryId": "VisualisationWPF",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}
