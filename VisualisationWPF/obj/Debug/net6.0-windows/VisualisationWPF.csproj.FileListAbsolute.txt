@@ -1,0 +1,4 @@
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\PSI Fonctionnel\VisualisationWPF\obj\Debug\net6.0-windows\MainWindow.g.cs
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\PSI Fonctionnel\VisualisationWPF\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\PSI Fonctionnel\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF_MarkupCompile.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\PSI Fonctionnel\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF_MarkupCompile.lref
