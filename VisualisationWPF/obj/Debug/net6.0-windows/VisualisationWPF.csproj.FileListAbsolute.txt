@@ -2,3 +2,14 @@ C:\Users\degar\OneDrive\Bureau\Projet GitHub\PSI Fonctionnel\VisualisationWPF\ob
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\PSI Fonctionnel\VisualisationWPF\obj\Debug\net6.0-windows\App.g.cs
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\PSI Fonctionnel\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF_MarkupCompile.cache
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\PSI Fonctionnel\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF_MarkupCompile.lref
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF.csproj.AssemblyReference.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\MainWindow.baml
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\MainWindow.g.cs
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF_MarkupCompile.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF.g.resources
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF.AssemblyInfoInputs.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF.AssemblyInfo.cs
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF.csproj.CoreCompileInputs.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\VisualisationWPF\obj\Debug\net6.0-windows\VisualisationWPF.sourcelink.json

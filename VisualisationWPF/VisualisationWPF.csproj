@@ -8,4 +8,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj" />
+  </ItemGroup>
+
 </Project>

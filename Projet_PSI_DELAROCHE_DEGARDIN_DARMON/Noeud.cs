@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
 {
-    internal class Noeud<T>
+    public class Noeud<T>
     {
         private T valeur;
         public T Valeur { get { return valeur; } }

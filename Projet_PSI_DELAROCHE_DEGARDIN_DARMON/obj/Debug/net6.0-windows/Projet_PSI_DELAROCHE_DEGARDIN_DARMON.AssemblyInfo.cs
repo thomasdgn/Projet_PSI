@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("VisualisationWPF")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Projet_PSI_DELAROCHE_DEGARDIN_DARMON")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d501aec3e54d6d63da8402340dc3e105c9caadcc")]
-[assembly: System.Reflection.AssemblyProductAttribute("VisualisationWPF")]
-[assembly: System.Reflection.AssemblyTitleAttribute("VisualisationWPF")]
+[assembly: System.Reflection.AssemblyProductAttribute("Projet_PSI_DELAROCHE_DEGARDIN_DARMON")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Projet_PSI_DELAROCHE_DEGARDIN_DARMON")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]

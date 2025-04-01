@@ -1,0 +1,6 @@
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj.AssemblyReference.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.AssemblyInfoInputs.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.AssemblyInfo.cs
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj.CoreCompileInputs.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.sourcelink.json

@@ -7,7 +7,7 @@ using MySql.Data.MySqlClient;
 
 namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
 {
-    internal class ImporteurMySQL
+    public class ImporteurMySQL
     {
 
         public static void Charger(string cheminSQL, Graphe<Station> graphe)

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mysqlx.Crud;
 
 namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
 {
-    internal class Lien<T>
+    public class Lien<T>
     {
         private Noeud<T> depart;
         private Noeud<T> arrivee;
@@ -25,6 +27,12 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
             this.poids = poids;
         }
 
+        public void Deconstruct(out Noeud<T> a, out Noeud<T> b, out int poids)
+        {
+            a = Depart;
+            b = Arrivee;
+            poids = Poids;
+        }
 
     }
 }

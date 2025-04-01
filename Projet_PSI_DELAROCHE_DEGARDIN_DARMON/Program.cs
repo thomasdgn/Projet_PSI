@@ -5,27 +5,17 @@ using System.Windows;
 using static System.Net.Mime.MediaTypeNames;
 using System;
 
-class Program
+public class Program
 {
     [STAThread] // WPF !
     static void Main(string[] args)
     {
-
-        var app = new Application();
-        var fenetre = new VisualisationWPF.MainWindow(graphe); // passage du graphe
-        app.Run(fenetre);
-        // 7. Test importation du .csv
-        var grapheMetro = new Graphe<Station>();
-
-
         // Import données via MySQL :
 
         string cheminSQL = "server=localhost;user=root;password=root;database=metro;";
 
         Graphe<Station> graphe = new Graphe<Station>();
         ImporteurMySQL.Charger(cheminSQL, graphe);
-
-        LancerWPF(graphe);
 
         Console.WriteLine("===== PLAN DU MÉTRO DE PARIS =====");
 
@@ -42,10 +32,10 @@ class Program
             switch (choix)
             {
                 case "1":
-                    ListerStations(grapheMetro);
+                    ListerStations(graphe);
                     break;
                 case "2":
-                    RechercherStation(grapheMetro);
+                    RechercherStation(graphe);
                     break;
                 case "3":
                     // CalculerItineraire(grapheMetro); (Clément doit s'en occuper)
@@ -97,13 +87,5 @@ class Program
                 Console.WriteLine($"- {station}");
             }
         }
-    }
-
-
-    static void LancerWPF(Graphe<Station> graphe)
-    {
-        var app = new Application();
-        var fenetre = new VisualisationWPF.MainWindow(graphe); // passage du graphe
-        app.Run(fenetre);
     }
 }

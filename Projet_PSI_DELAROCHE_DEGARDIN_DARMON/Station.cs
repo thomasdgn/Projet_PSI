@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
 {
-    internal class Station
+    public class Station
     {
         private int id;
         private string nom;
