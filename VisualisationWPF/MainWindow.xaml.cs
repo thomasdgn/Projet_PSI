@@ -29,9 +29,9 @@ namespace VisualisationWPF
 
         public MainWindow(Graphe<MaStation> g)
         {
-            InitializeComponent();
             graphe = g;
-            DessinerCarte(graphe);
+            InitializeComponent();
+            // DessinerCarte(graphe);
         }
 
 
@@ -78,7 +78,7 @@ namespace VisualisationWPF
 
         };
 
-        private void DessinerCarte(Graphe<MaStation> graphe)
+        private void DessinerCarte(Graphe<Station> graphe)
         {
             canvasCarte.Children.Clear();
             positions.Clear();
@@ -91,15 +91,22 @@ namespace VisualisationWPF
             double minLon = graphe.Noeuds.Min(n => n.Valeur.Longitude);
             double maxLon = graphe.Noeuds.Max(n => n.Valeur.Longitude);
 
+            double deltaLat = maxLat - minLat;
+            double deltaLon = maxLon - minLon;
+            if (deltaLat == 0) deltaLat = 0.0001;
+            if (deltaLon == 0) deltaLon = 0.0001;
+
             double largeur = canvasCarte.ActualWidth > 0 ? canvasCarte.ActualWidth : canvasCarte.Width;
             double hauteur = canvasCarte.ActualHeight > 0 ? canvasCarte.ActualHeight : canvasCarte.Height;
 
+
+            // Positionnement des stations
             foreach (var noeud in graphe.Noeuds)
             {
                 var s = noeud.Valeur;
 
-                double x = (s.Longitude - minLon) / (maxLon - minLon) * (largeur - 40) + 20;
-                double y = (1 - (s.Latitude - minLat) / (maxLat - minLat)) * (hauteur - 40) + 20;
+                double x = (s.Longitude - minLon) / deltaLon * (largeur - 40) + 20;
+                double y = (1 - (s.Latitude - minLat) / deltaLat) * (hauteur - 40) + 20;
                 var point = new Point(x, y);
                 positions[noeud] = point;
 
@@ -129,22 +136,25 @@ namespace VisualisationWPF
                 canvasCarte.Children.Add(nom);
             }
 
-            foreach ((Noeud<MaStation> a, Noeud<MaStation> b, int poids) in graphe.Liens)
+            // Lignes (liaisons)
+            foreach (var lien in graphe.Liens)
             {
-                if (!positions.ContainsKey(a) || !positions.ContainsKey(b)) continue;
+                if (!positions.TryGetValue(lien.Depart, out Point posDep) ||
+                    !positions.TryGetValue(lien.Arrivee, out Point posArr))
+                    continue;
 
-                var ligneA = a.Valeur.Ligne;
-                Brush couleur = couleursParLigne.ContainsKey(ligneA) ? couleursParLigne[ligneA] : Brushes.Gray;
+                if (double.IsNaN(posDep.X) || double.IsNaN(posDep.Y) ||
+                    double.IsNaN(posArr.X) || double.IsNaN(posArr.Y))
+                    continue;
 
-                Line ligne = new()
+                var ligne = new Line
                 {
-                    X1 = positions[a].X,
-                    Y1 = positions[a].Y,
-                    X2 = positions[b].X,
-                    Y2 = positions[b].Y,
-                    Stroke = couleur,
-                    StrokeThickness = 1.5,
-                    StrokeDashCap = PenLineCap.Round
+                    X1 = posDep.X,
+                    Y1 = posDep.Y,
+                    X2 = posArr.X,
+                    Y2 = posArr.Y,
+                    Stroke = Brushes.Gray,
+                    StrokeThickness = 1.5
                 };
 
                 canvasCarte.Children.Add(ligne);
@@ -155,10 +165,11 @@ namespace VisualisationWPF
 
 
 
-        private async Task AfficherCheminPlusCourtAsync(Noeud<MaStation> depart, Noeud<MaStation> arrivee)
-        {
-            (List<Noeud<Station>> chemin, int cout) = graphe.Dijkstra(depart, arrivee);
 
+
+        private async Task AfficherCheminPlusCourtAsync(Noeud<Station> depart, Noeud<Station> arrivee)
+        {
+            var (chemin, cout) = graphe.Dijkstra(depart, arrivee);
 
             if (chemin == null || chemin.Count < 2)
             {
@@ -176,7 +187,7 @@ namespace VisualisationWPF
                 Opacity = 0.8
             };
 
-            foreach (var (a, b) in chemin.Zip(chemin.Skip(1), (x, y) => (x, y)))
+            foreach ((Noeud<Station> a, Noeud<Station> b) in chemin.Zip(chemin.Skip(1), (x, y) => (x, y)))
             {
                 if (!positions.ContainsKey(a) || !positions.ContainsKey(b)) continue;
 
@@ -205,18 +216,19 @@ namespace VisualisationWPF
 
                 ligne.BeginAnimation(UIElement.OpacityProperty, fadeIn);
 
-                await Task.Delay(300); // temps entre chaque étape
+                await Task.Delay(300);
             }
 
-            // 1. Station de départ = vert foncé
+            // Station de départ (vert foncé)
             if (cerclesStations.ContainsKey(depart))
             {
-                cerclesStations[depart].Fill = Brushes.DarkGreen;
-                cerclesStations[depart].Width = 12;
-                cerclesStations[depart].Height = 12;
+                var ellipseDepart = cerclesStations[depart];
+                ellipseDepart.Fill = Brushes.DarkGreen;
+                ellipseDepart.Width = 12;
+                ellipseDepart.Height = 12;
             }
 
-            // 2. Station d’arrivée = rouge clignotant
+            // Station d’arrivée (rouge clignotant)
             if (cerclesStations.ContainsKey(arrivee))
             {
                 var ellipseArrivee = cerclesStations[arrivee];
@@ -235,29 +247,35 @@ namespace VisualisationWPF
 
                 ellipseArrivee.BeginAnimation(UIElement.OpacityProperty, clignote);
             }
-
         }
+
 
 
 
 
         private async void BtnAfficherChemin_Click(object sender, RoutedEventArgs e)
         {
-            string nomDepart = txtDepart.Text.Trim().ToLower();
-            string nomArrivee = txtArrivee.Text.Trim().ToLower();
+            string nomDepart = txtDepart.Text.Trim();
+            string nomArrivee = txtArrivee.Text.Trim();
 
-            var depart = graphe.Noeuds.FirstOrDefault(n => n.Valeur.Nom.ToLower() == nomDepart);
-            var arrivee = graphe.Noeuds.FirstOrDefault(n => n.Valeur.Nom.ToLower() == nomArrivee);
+            // Recherche dans le graphe avec Noeud<Station>
+            var noeudDepart = graphe.Noeuds.FirstOrDefault(n =>
+                n.Valeur.Nom.Equals(nomDepart, StringComparison.OrdinalIgnoreCase));
 
-            if (depart == null || arrivee == null)
+            var noeudArrivee = graphe.Noeuds.FirstOrDefault(n =>
+                n.Valeur.Nom.Equals(nomArrivee, StringComparison.OrdinalIgnoreCase));
+
+            if (noeudDepart == null || noeudArrivee == null)
             {
-                MessageBox.Show("Stations introuvables. Vérifie l'orthographe.");
+                MessageBox.Show("❌ Station de départ ou d’arrivée introuvable.");
                 return;
             }
 
-            DessinerCarte(graphe); // reset
-            await AfficherCheminPlusCourtAsync(depart, arrivee);
+            // Appel de ta méthode corrigée
+            await AfficherCheminPlusCourtAsync(noeudDepart, noeudArrivee);
         }
+
+
 
 
 

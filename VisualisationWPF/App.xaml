@@ -2,8 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:VisualisationWPF"
-             StartupUri="MainWindow.xaml">
+             <!-- Suppression du StartupUri, car on instancie manuellement -->
+
     <Application.Resources>
          
     </Application.Resources>
 </Application>
+c:\users\degar\onedrive\bureau\projet github\essai solo\projet_psi\visualisationwpf\app.xaml.cs
+c:\users\degar\onedrive\bureau\projet github\essai solo\projet_psi\visualisationwpf\app.xaml
