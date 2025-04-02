@@ -17,6 +17,29 @@ public class Program
         Graphe<Station> graphe = new Graphe<Station>();
         ImporteurMySQL.Charger(cheminSQL, graphe);
 
+        // Choisis deux stations sur des lignes différentes mais avec correspondance
+        var depart = graphe.Noeuds.First(n => n.Valeur.Nom == "Châtelet" && n.Valeur.Ligne == "1");
+        var arrivee = graphe.Noeuds.First(n => n.Valeur.Nom == "Gare de Lyon" && n.Valeur.Ligne == "14");
+
+        var (chemin, cout) = graphe.Dijkstra(depart, arrivee);
+
+        Console.WriteLine("Itinéraire trouvé :");
+        if (chemin == null || chemin.Count == 0)
+        {
+            Console.WriteLine("Aucun chemin trouvé entre les deux stations.");
+            Console.WriteLine("Coût total : N/A");
+        }
+        else
+        {
+            Console.WriteLine("Itinéraire trouvé :");
+            foreach (var station in chemin)
+            {
+                Console.WriteLine(station);
+            }
+            Console.WriteLine($"Coût total : {cout} minutes");
+        }
+
+        /*
         Console.WriteLine("===== PLAN DU MÉTRO DE PARIS =====");
 
         while (true)
@@ -87,5 +110,9 @@ public class Program
                 Console.WriteLine($"- {station}");
             }
         }
+
+        */
     }
+
+        
 }

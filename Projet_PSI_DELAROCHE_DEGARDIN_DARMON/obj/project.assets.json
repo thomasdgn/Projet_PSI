@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net6.0-windows7.0": {
+    "net8.0-windows7.0": {
       "BouncyCastle.Cryptography/2.3.1": {
         "type": "package",
         "compile": {
@@ -54,12 +54,12 @@
           "DocumentFormat.OpenXml.Framework": "3.1.1"
         },
         "compile": {
-          "lib/netstandard2.0/DocumentFormat.OpenXml.dll": {
+          "lib/net8.0/DocumentFormat.OpenXml.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/DocumentFormat.OpenXml.dll": {
+          "lib/net8.0/DocumentFormat.OpenXml.dll": {
             "related": ".xml"
           }
         }
@@ -70,12 +70,12 @@
           "System.IO.Packaging": "8.0.1"
         },
         "compile": {
-          "lib/net6.0/DocumentFormat.OpenXml.Framework.dll": {
+          "lib/net8.0/DocumentFormat.OpenXml.Framework.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/DocumentFormat.OpenXml.Framework.dll": {
+          "lib/net8.0/DocumentFormat.OpenXml.Framework.dll": {
             "related": ".xml"
           }
         }
@@ -179,22 +179,6 @@
           }
         }
       },
-      "Microsoft.Bcl.AsyncInterfaces/9.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
-            "related": ".xml"
-          }
-        },
-        "build": {
-          "buildTransitive/netcoreapp2.0/Microsoft.Bcl.AsyncInterfaces.targets": {}
-        }
-      },
       "Microsoft.NETCore.Platforms/1.1.0": {
         "type": "package",
         "compile": {
@@ -231,12 +215,12 @@
           "ZstdSharp.Port": "0.8.0"
         },
         "compile": {
-          "lib/netstandard2.1/MySql.Data.dll": {
+          "lib/net8.0/MySql.Data.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.1/MySql.Data.dll": {
+          "lib/net8.0/MySql.Data.dll": {
             "related": ".xml"
           }
         },
@@ -266,12 +250,12 @@
       "RBush/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/RBush.dll": {
+          "lib/net8.0/RBush.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/RBush.dll": {
+          "lib/net8.0/RBush.dll": {
             "related": ".xml"
           }
         }
@@ -301,15 +285,16 @@
       "System.Configuration.ConfigurationManager/8.0.0": {
         "type": "package",
         "dependencies": {
+          "System.Diagnostics.EventLog": "8.0.0",
           "System.Security.Cryptography.ProtectedData": "8.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Configuration.ConfigurationManager.dll": {
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Configuration.ConfigurationManager.dll": {
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll": {
             "related": ".xml"
           }
         },
@@ -319,21 +304,44 @@
       },
       "System.Diagnostics.DiagnosticSource/8.0.1": {
         "type": "package",
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
         "compile": {
-          "lib/net6.0/System.Diagnostics.DiagnosticSource.dll": {
+          "lib/net8.0/System.Diagnostics.DiagnosticSource.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Diagnostics.DiagnosticSource.dll": {
+          "lib/net8.0/System.Diagnostics.DiagnosticSource.dll": {
             "related": ".xml"
           }
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Diagnostics.EventLog/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          },
+          "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
         }
       },
       "System.IO/4.3.0": {
@@ -354,12 +362,12 @@
       "System.IO.Packaging/8.0.1": {
         "type": "package",
         "compile": {
-          "lib/net6.0/System.IO.Packaging.dll": {
+          "lib/net8.0/System.IO.Packaging.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.IO.Packaging.dll": {
+          "lib/net8.0/System.IO.Packaging.dll": {
             "related": ".xml"
           }
         },
@@ -369,32 +377,18 @@
       },
       "System.IO.Pipelines/9.0.0": {
         "type": "package",
-        "dependencies": {
-          "System.Buffers": "4.5.1",
-          "System.Memory": "4.5.5",
-          "System.Threading.Tasks.Extensions": "4.5.4"
-        },
         "compile": {
-          "lib/netstandard2.0/System.IO.Pipelines.dll": {
+          "lib/net8.0/System.IO.Pipelines.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/System.IO.Pipelines.dll": {
+          "lib/net8.0/System.IO.Pipelines.dll": {
             "related": ".xml"
           }
         },
         "build": {
-          "buildTransitive/netcoreapp2.0/System.IO.Pipelines.targets": {}
-        }
-      },
-      "System.Memory/4.5.5": {
-        "type": "package",
-        "compile": {
-          "ref/netcoreapp2.1/_._": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.1/_._": {}
+          "buildTransitive/net8.0/_._": {}
         }
       },
       "System.Reflection/4.3.0": {
@@ -472,12 +466,12 @@
       "System.Security.Cryptography.ProtectedData/8.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/System.Security.Cryptography.ProtectedData.dll": {
+          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Security.Cryptography.ProtectedData.dll": {
+          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll": {
             "related": ".xml"
           }
         },
@@ -491,12 +485,12 @@
           "System.Windows.Extensions": "8.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Security.Permissions.dll": {
+          "lib/net8.0/System.Security.Permissions.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Security.Permissions.dll": {
+          "lib/net8.0/System.Security.Permissions.dll": {
             "related": ".xml"
           }
         },
@@ -519,16 +513,13 @@
       },
       "System.Text.Encoding.CodePages/8.0.0": {
         "type": "package",
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
         "compile": {
-          "lib/net6.0/System.Text.Encoding.CodePages.dll": {
+          "lib/net8.0/System.Text.Encoding.CodePages.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Text.Encoding.CodePages.dll": {
+          "lib/net8.0/System.Text.Encoding.CodePages.dll": {
             "related": ".xml"
           }
         },
@@ -536,7 +527,7 @@
           "buildTransitive/net6.0/_._": {}
         },
         "runtimeTargets": {
-          "runtimes/win/lib/net6.0/System.Text.Encoding.CodePages.dll": {
+          "runtimes/win/lib/net8.0/System.Text.Encoding.CodePages.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -544,48 +535,44 @@
       },
       "System.Text.Encodings.Web/9.0.0": {
         "type": "package",
-        "dependencies": {
-          "System.Buffers": "4.5.1",
-          "System.Memory": "4.5.5",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
         "compile": {
-          "lib/netstandard2.0/System.Text.Encodings.Web.dll": {
+          "lib/net8.0/System.Text.Encodings.Web.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/System.Text.Encodings.Web.dll": {
+          "lib/net8.0/System.Text.Encodings.Web.dll": {
             "related": ".xml"
           }
         },
         "build": {
-          "buildTransitive/netcoreapp2.0/System.Text.Encodings.Web.targets": {}
+          "buildTransitive/net8.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/browser/lib/net8.0/System.Text.Encodings.Web.dll": {
+            "assetType": "runtime",
+            "rid": "browser"
+          }
         }
       },
       "System.Text.Json/9.0.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "9.0.0",
-          "System.Buffers": "4.5.1",
           "System.IO.Pipelines": "9.0.0",
-          "System.Memory": "4.5.5",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
-          "System.Text.Encodings.Web": "9.0.0",
-          "System.Threading.Tasks.Extensions": "4.5.4"
+          "System.Text.Encodings.Web": "9.0.0"
         },
         "compile": {
-          "lib/netstandard2.0/System.Text.Json.dll": {
+          "lib/net8.0/System.Text.Json.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/System.Text.Json.dll": {
+          "lib/net8.0/System.Text.Json.dll": {
             "related": ".xml"
           }
         },
         "build": {
-          "buildTransitive/netcoreapp2.0/System.Text.Json.targets": {}
+          "buildTransitive/net8.0/System.Text.Json.targets": {}
         }
       },
       "System.Threading.Tasks/4.3.0": {
@@ -613,17 +600,17 @@
       "System.Windows.Extensions/8.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/System.Windows.Extensions.dll": {
+          "lib/net8.0/System.Windows.Extensions.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Windows.Extensions.dll": {
+          "lib/net8.0/System.Windows.Extensions.dll": {
             "related": ".xml"
           }
         },
         "runtimeTargets": {
-          "runtimes/win/lib/net6.0/System.Windows.Extensions.dll": {
+          "runtimes/win/lib/net8.0/System.Windows.Extensions.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -632,10 +619,10 @@
       "ZstdSharp.Port/0.8.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/ZstdSharp.dll": {}
+          "lib/net8.0/ZstdSharp.dll": {}
         },
         "runtime": {
-          "lib/net6.0/ZstdSharp.dll": {}
+          "lib/net8.0/ZstdSharp.dll": {}
         }
       }
     }
@@ -891,32 +878,6 @@
         "lib/netstandard2.1/K4os.Hash.xxHash.xml"
       ]
     },
-    "Microsoft.Bcl.AsyncInterfaces/9.0.0": {
-      "sha512": "owmu2Cr3IQ8yQiBleBHlGk8dSQ12oaF2e7TpzwJKEl4m84kkZJjEY1n33L67Y3zM5jPOjmmbdHjbfiL0RqcMRQ==",
-      "type": "package",
-      "path": "microsoft.bcl.asyncinterfaces/9.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "PACKAGE.md",
-        "THIRD-PARTY-NOTICES.TXT",
-        "buildTransitive/net461/Microsoft.Bcl.AsyncInterfaces.targets",
-        "buildTransitive/net462/_._",
-        "buildTransitive/net8.0/_._",
-        "buildTransitive/netcoreapp2.0/Microsoft.Bcl.AsyncInterfaces.targets",
-        "lib/net462/Microsoft.Bcl.AsyncInterfaces.dll",
-        "lib/net462/Microsoft.Bcl.AsyncInterfaces.xml",
-        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll",
-        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.xml",
-        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
-        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml",
-        "microsoft.bcl.asyncinterfaces.9.0.0.nupkg.sha512",
-        "microsoft.bcl.asyncinterfaces.nuspec",
-        "useSharedDesignerContext.txt"
-      ]
-    },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
@@ -1105,6 +1066,45 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "System.Diagnostics.EventLog/8.0.0": {
+      "sha512": "fdYxcRjQqTTacKId/2IECojlDSFvp7LP5N78+0z/xH7v/Tuw5ZAxu23Y6PTCRinqyu2ePx+Gn1098NC6jM6d+A==",
+      "type": "package",
+      "path": "system.diagnostics.eventlog/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Diagnostics.EventLog.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Diagnostics.EventLog.targets",
+        "lib/net462/System.Diagnostics.EventLog.dll",
+        "lib/net462/System.Diagnostics.EventLog.xml",
+        "lib/net6.0/System.Diagnostics.EventLog.dll",
+        "lib/net6.0/System.Diagnostics.EventLog.xml",
+        "lib/net7.0/System.Diagnostics.EventLog.dll",
+        "lib/net7.0/System.Diagnostics.EventLog.xml",
+        "lib/net8.0/System.Diagnostics.EventLog.dll",
+        "lib/net8.0/System.Diagnostics.EventLog.xml",
+        "lib/netstandard2.0/System.Diagnostics.EventLog.dll",
+        "lib/netstandard2.0/System.Diagnostics.EventLog.xml",
+        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll",
+        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.xml",
+        "runtimes/win/lib/net7.0/System.Diagnostics.EventLog.Messages.dll",
+        "runtimes/win/lib/net7.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net7.0/System.Diagnostics.EventLog.xml",
+        "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll",
+        "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.xml",
+        "system.diagnostics.eventlog.8.0.0.nupkg.sha512",
+        "system.diagnostics.eventlog.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "System.IO/4.3.0": {
       "sha512": "3qjaHvxQPDpSOYICjUoTsmoq5u6QJAFRUITgeT/4gqkF1bajbSmb1kwSxEA8AHlofqgcKJcM8udgieRNhaJ5Cg==",
       "type": "package",
@@ -1241,29 +1241,6 @@
         "system.io.pipelines.9.0.0.nupkg.sha512",
         "system.io.pipelines.nuspec",
         "useSharedDesignerContext.txt"
-      ]
-    },
-    "System.Memory/4.5.5": {
-      "sha512": "XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
-      "type": "package",
-      "path": "system.memory/4.5.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/System.Memory.dll",
-        "lib/net461/System.Memory.xml",
-        "lib/netcoreapp2.1/_._",
-        "lib/netstandard1.1/System.Memory.dll",
-        "lib/netstandard1.1/System.Memory.xml",
-        "lib/netstandard2.0/System.Memory.dll",
-        "lib/netstandard2.0/System.Memory.xml",
-        "ref/netcoreapp2.1/_._",
-        "system.memory.4.5.5.nupkg.sha512",
-        "system.memory.nuspec",
-        "useSharedDesignerContext.txt",
-        "version.txt"
       ]
     },
     "System.Reflection/4.3.0": {
@@ -1984,7 +1961,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net6.0-windows7.0": [
+    "net8.0-windows7.0": [
       "ClosedXML >= 0.104.2",
       "ExcelDataReader >= 3.7.0",
       "ExcelDataReader.DataSet >= 3.7.0",
@@ -2013,15 +1990,15 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0-windows"
+        "net8.0-windows"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net6.0-windows7.0": {
-          "targetAlias": "net6.0-windows",
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
           "projectReferences": {}
         }
       },
@@ -2038,8 +2015,8 @@
       "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
-      "net6.0-windows7.0": {
-        "targetAlias": "net6.0-windows",
+      "net8.0-windows7.0": {
+        "targetAlias": "net8.0-windows",
         "dependencies": {
           "ClosedXML": {
             "target": "Package",
@@ -2077,7 +2054,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

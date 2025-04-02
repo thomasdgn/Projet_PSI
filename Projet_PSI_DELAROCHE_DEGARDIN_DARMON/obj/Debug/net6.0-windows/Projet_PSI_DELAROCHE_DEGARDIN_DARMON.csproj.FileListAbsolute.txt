@@ -1,9 +1,3 @@
-C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj.AssemblyReference.cache
-C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.AssemblyInfoInputs.cache
-C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.AssemblyInfo.cs
-C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj.CoreCompileInputs.cache
-C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.sourcelink.json
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\bin\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.exe
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\bin\Debug\net6.0-windows\MetroParis.xlsx
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\bin\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.deps.json
@@ -44,6 +38,12 @@ C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DE
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\bin\Debug\net6.0-windows\runtimes\win-x64\native\krbcc64.dll
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj.AssemblyReference.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.AssemblyInfoInputs.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.AssemblyInfo.cs
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj.CoreCompileInputs.cache
+C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.sourcelink.json
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_P.4040A9CD.Up2Date
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.dll
 C:\Users\degar\OneDrive\Bureau\Projet GitHub\Essai solo\Projet_PSI\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\obj\Debug\net6.0-windows\refint\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.dll

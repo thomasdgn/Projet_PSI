@@ -22,15 +22,15 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0-windows"
+          "net8.0-windows"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0-windows7.0": {
-            "targetAlias": "net6.0-windows",
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
             "projectReferences": {}
           }
         },
@@ -47,8 +47,8 @@
         "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
-        "net6.0-windows7.0": {
-          "targetAlias": "net6.0-windows",
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
           "dependencies": {
             "ClosedXML": {
               "target": "Package",
@@ -86,7 +86,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -108,15 +108,15 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0-windows"
+          "net8.0-windows"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0-windows7.0": {
-            "targetAlias": "net6.0-windows",
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
             "projectReferences": {
               "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj": {
                 "projectPath": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj"
@@ -137,12 +137,16 @@
         "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
-        "net6.0-windows7.0": {
-          "targetAlias": "net6.0-windows",
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
           "dependencies": {
             "ClosedXML": {
               "target": "Package",
               "version": "[0.104.2, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[9.2.0, )"
             }
           },
           "imports": [
@@ -164,7 +168,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

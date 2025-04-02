@@ -234,7 +234,7 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
 
 
 
-        // Algorithme de Bellman-Ford
+        // Algorithme de Bellman-Ford : Refaire en utilisant la base de données SQL !
 
         // Représente une arête orientée avec un poids
         public readonly record struct Edge(int From, int To, int Weight);
@@ -316,68 +316,8 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
         }
 
 
-        public List<Noeud<T>> ObtenirVoisins(Noeud<T> noeud)
-        {
-            if (ListeAdjacence.ContainsKey(noeud))
-                return ListeAdjacence[noeud];
-            else
-                return new List<Noeud<T>>();
-        }
 
-
-        public (List<Noeud<T>> chemin, int cout) Dijkstra(Noeud<T> depart, Noeud<T> arrivee)
-        {
-            var distances = new Dictionary<Noeud<T>, int>();
-            var precedent = new Dictionary<Noeud<T>, Noeud<T>?>();
-            var file = new PriorityQueue<Noeud<T>, int>();
-
-            foreach (var noeud in Noeuds)
-            {
-                distances[noeud] = int.MaxValue;
-                precedent[noeud] = null;
-            }
-
-            distances[depart] = 0;
-            file.Enqueue(depart, 0);
-
-            while (file.Count > 0)
-            {
-                var courant = file.Dequeue();
-
-                if (courant.Equals(arrivee))
-                    break;
-
-                foreach (var voisin in ObtenirVoisins(courant))
-                {
-                    var lien = Liens.FirstOrDefault(l => l.Depart.Equals(courant) && l.Arrivee.Equals(voisin));
-                    if (lien == null) continue;
-
-                    int nouveauCout = distances[courant] + lien.Poids;
-
-                    if (nouveauCout < distances[voisin])
-                    {
-                        distances[voisin] = nouveauCout;
-                        precedent[voisin] = courant;
-                        file.Enqueue(voisin, nouveauCout);
-                    }
-                }
-            }
-
-            // Reconstruire le chemin
-            var chemin = new List<Noeud<T>>();
-            var noeudActuel = arrivee;
-
-            if (precedent[noeudActuel] == null && !noeudActuel.Equals(depart))
-                return (null, int.MaxValue); // pas de chemin trouvé
-
-            while (noeudActuel != null)
-            {
-                chemin.Insert(0, noeudActuel);
-                noeudActuel = precedent[noeudActuel];
-            }
-
-            return (chemin, distances[arrivee]);
-        }
+        // Partie Clément : Dijkstra et autre algo jsplus le nom
 
     }
 }

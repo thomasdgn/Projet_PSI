@@ -1,82 +1,63 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Projet_PSI_DELAROCHE_DEGARDIN_DARMON;
-using static System.Collections.Specialized.BitVector32;
-using MaStation = Projet_PSI_DELAROCHE_DEGARDIN_DARMON.Station;
-
+using System.IO;
 
 namespace VisualisationWPF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private Graphe<MaStation> graphe;
-        private Dictionary<Noeud<MaStation>, Point> positions = new();
-        private Dictionary<Noeud<MaStation>, Ellipse> cerclesStations = new();
-        private bool modeNuitActif = false;
-
-        public MainWindow(Graphe<MaStation> g)
+        private Graphe<Station> graphe = new();
+        private Dictionary<Noeud<Station>, Point> positions = new();
+        private Dictionary<Noeud<Station>, Ellipse> cerclesStations = new();
+        private readonly Dictionary<string, Brush> couleursLignes = new()
         {
-            graphe = g;
-            InitializeComponent();
-            // DessinerCarte(graphe);
-        }
-
-
-        private void BtnReinitialiser_Click(object sender, RoutedEventArgs e)
-        {
-            DessinerCarte(graphe);
-            txtTempsTotal.Text = "";
-        }
-
-        private void ChkModeNuit_Checked(object sender, RoutedEventArgs e)
-        {
-            modeNuitActif = true;
-            DessinerCarte(graphe);
-        }
-
-        private void ChkModeNuit_Unchecked(object sender, RoutedEventArgs e)
-        {
-            modeNuitActif = false;
-            DessinerCarte(graphe);
-        }
-
-        private Brush ObtenirFondCarte() => modeNuitActif ? Brushes.Black : Brushes.WhiteSmoke;
-        private Brush ObtenirCouleurTexte() => modeNuitActif ? Brushes.White : Brushes.Black;
-        private Brush CouleurStationNormale() => modeNuitActif ? Brushes.Cyan : Brushes.DarkBlue;
-
-
-
-        private readonly Dictionary<string, Brush> couleursParLigne = new()
-        {
-            { "1", Brushes.Goldenrod },
-            { "2", Brushes.Blue },
-            { "3", Brushes.Green },
-            { "4", Brushes.MediumPurple },
+            { "1", Brushes.Gold },
+            { "2", Brushes.BlueViolet },
+            { "3", Brushes.Olive },
+            { "3bis", Brushes.LightGreen },
+            { "4", Brushes.Purple },
             { "5", Brushes.Orange },
-            { "6", Brushes.Teal },
+            { "6", Brushes.LightGreen },
             { "7", Brushes.Pink },
-            { "8", Brushes.MediumSlateBlue },
-            { "9", Brushes.OrangeRed },
-            { "10", Brushes.DarkGoldenrod },
-            { "11", Brushes.LightGreen },
+            { "7bis", Brushes.SkyBlue },
+            { "8", Brushes.Violet },
+            { "9", Brushes.YellowGreen },
+            { "10", Brushes.Goldenrod },
+            { "11", Brushes.Brown },
             { "12", Brushes.DarkGreen },
-            { "13", Brushes.DarkCyan },
-            { "14", Brushes.HotPink },
-
+            { "13", Brushes.Teal },
+            { "14", Brushes.MediumVioletRed }
         };
+
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            Loaded += MainWindow_Loaded;
+        }
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            progressChemin.Visibility = Visibility.Visible;
+
+            await Task.Run(() =>
+            {
+                string conn = "server=localhost;user=root;password=root;database=metro;";
+                ImporteurMySQL.Charger(conn, graphe);
+            });
+
+            DessinerCarte(graphe);
+            progressChemin.Visibility = Visibility.Collapsed;
+        }
 
         private void DessinerCarte(Graphe<Station> graphe)
         {
@@ -84,37 +65,28 @@ namespace VisualisationWPF
             positions.Clear();
             cerclesStations.Clear();
 
-            canvasCarte.Background = ObtenirFondCarte();
-
             double minLat = graphe.Noeuds.Min(n => n.Valeur.Latitude);
             double maxLat = graphe.Noeuds.Max(n => n.Valeur.Latitude);
             double minLon = graphe.Noeuds.Min(n => n.Valeur.Longitude);
             double maxLon = graphe.Noeuds.Max(n => n.Valeur.Longitude);
 
-            double deltaLat = maxLat - minLat;
-            double deltaLon = maxLon - minLon;
-            if (deltaLat == 0) deltaLat = 0.0001;
-            if (deltaLon == 0) deltaLon = 0.0001;
-
             double largeur = canvasCarte.ActualWidth > 0 ? canvasCarte.ActualWidth : canvasCarte.Width;
             double hauteur = canvasCarte.ActualHeight > 0 ? canvasCarte.ActualHeight : canvasCarte.Height;
 
-
-            // Positionnement des stations
             foreach (var noeud in graphe.Noeuds)
             {
                 var s = noeud.Valeur;
+                double x = (s.Longitude - minLon) / (maxLon - minLon) * (largeur - 40) + 20;
+                double y = (1 - (s.Latitude - minLat) / (maxLat - minLat)) * (hauteur - 40) + 20;
 
-                double x = (s.Longitude - minLon) / deltaLon * (largeur - 40) + 20;
-                double y = (1 - (s.Latitude - minLat) / deltaLat) * (hauteur - 40) + 20;
-                var point = new Point(x, y);
-                positions[noeud] = point;
+                Point p = new(x, y);
+                positions[noeud] = p;
 
                 Ellipse cercle = new()
                 {
                     Width = 10,
                     Height = 10,
-                    Fill = CouleurStationNormale(),
+                    Fill = Brushes.DarkBlue,
                     Stroke = Brushes.White,
                     StrokeThickness = 1,
                     ToolTip = $"{s.Nom} (Ligne {s.Ligne})"
@@ -125,59 +97,111 @@ namespace VisualisationWPF
                 canvasCarte.Children.Add(cercle);
                 cerclesStations[noeud] = cercle;
 
-                TextBlock nom = new()
+                TextBlock label = new()
                 {
                     Text = s.Nom,
                     FontSize = 10,
-                    Foreground = ObtenirCouleurTexte()
+                    Foreground = Brushes.White
                 };
-                Canvas.SetLeft(nom, x + 6);
-                Canvas.SetTop(nom, y - 6);
-                canvasCarte.Children.Add(nom);
+                Canvas.SetLeft(label, x + 6);
+                Canvas.SetTop(label, y - 6);
+                canvasCarte.Children.Add(label);
             }
 
-            // Lignes (liaisons)
             foreach (var lien in graphe.Liens)
             {
-                if (!positions.TryGetValue(lien.Depart, out Point posDep) ||
-                    !positions.TryGetValue(lien.Arrivee, out Point posArr))
+                if (!positions.TryGetValue(lien.Depart, out Point posA) || !positions.TryGetValue(lien.Arrivee, out Point posB))
                     continue;
 
-                if (double.IsNaN(posDep.X) || double.IsNaN(posDep.Y) ||
-                    double.IsNaN(posArr.X) || double.IsNaN(posArr.Y))
-                    continue;
+                string ligneNom = lien.Depart.Valeur.Ligne.Trim().ToLower();
+
+                Brush couleur = Brushes.Gray;
+                if (couleursLignes.TryGetValue(ligneNom, out var brush))
+                    couleur = brush;
 
                 var ligne = new Line
                 {
-                    X1 = posDep.X,
-                    Y1 = posDep.Y,
-                    X2 = posArr.X,
-                    Y2 = posArr.Y,
-                    Stroke = Brushes.Gray,
-                    StrokeThickness = 1.5
+                    X1 = posA.X,
+                    Y1 = posA.Y,
+                    X2 = posB.X,
+                    Y2 = posB.Y,
+                    Stroke = couleur,
+                    StrokeThickness = 2.5,
+                    ToolTip = $"Ligne {ligneNom.ToUpper()} : {lien.Depart.Valeur.Nom} ⇄ {lien.Arrivee.Valeur.Nom}"
+
                 };
 
                 canvasCarte.Children.Add(ligne);
             }
+
         }
 
+        private void BtnReinitialiserCarte_Click(object sender, RoutedEventArgs e)
+        {
+            DessinerCarte(graphe);
+            txtDepart.Text = "";
+            txtArrivee.Text = "";
+            txtTempsTotal.Text = "";
+            txtListeStations.Text = "";
+        }
 
+        private async void BtnAfficherChemin_Click(object sender, RoutedEventArgs e)
+        {
+            string departNom = txtDepart.Text.Trim();
+            string arriveeNom = txtArrivee.Text.Trim();
 
+            var depart = graphe.Noeuds.FirstOrDefault(n => n.Valeur.Nom.Equals(departNom, StringComparison.OrdinalIgnoreCase));
+            var arrivee = graphe.Noeuds.FirstOrDefault(n => n.Valeur.Nom.Equals(arriveeNom, StringComparison.OrdinalIgnoreCase));
 
+            if (depart == null || arrivee == null)
+            {
+                MessageBox.Show("Stations introuvables.");
+                return;
+            }
 
-
+            await AfficherCheminPlusCourtAsync(depart, arrivee);
+        }
 
         private async Task AfficherCheminPlusCourtAsync(Noeud<Station> depart, Noeud<Station> arrivee)
         {
-            var (chemin, cout) = graphe.Dijkstra(depart, arrivee);
+            progressChemin.Visibility = Visibility.Visible;
+
+            List<Noeud<Station>> chemin = null;
+            int cout = int.MaxValue;
+
+            string algo = ((ComboBoxItem)comboAlgorithme.SelectedItem).Content.ToString();
+
+            if (algo == "Dijkstra")
+            {
+                (chemin, cout) = graphe.Dijkstra(depart, arrivee);
+            }
+            else if (algo == "Bellman-Ford")
+            {
+                // 🧠 Appel indirect à Bellman-Ford (système basé sur ID)
+                var edges = Graphe<Station>.ExcelGraphLoader.LoadEdgesWithStationNames("MetroParis.xlsx");
+                if (!edges.nameToId.TryGetValue(depart.Valeur.Nom, out int idDep) ||
+                    !edges.nameToId.TryGetValue(arrivee.Valeur.Nom, out int idArr)) return;
+
+                if (Graphe<Station>.BellmanFord.ComputeShortestPaths(edges.nameToId.Count, edges.edges, idDep, out int[] distances))
+                {
+                    cout = distances[idArr];
+                    chemin = graphe.Noeuds
+                        .Where(n => edges.nameToId.ContainsKey(n.Valeur.Nom)) // approx simplifiée
+                        .ToList();
+                }
+            }
+
 
             if (chemin == null || chemin.Count < 2)
             {
                 txtTempsTotal.Text = "";
+                txtListeStations.Text = "";
+                progressChemin.Visibility = Visibility.Collapsed;
                 return;
             }
 
             txtTempsTotal.Text = $"🕒 Temps estimé : {cout} min";
+            txtListeStations.Text = "🧭 Itinéraire :\n" + string.Join(" ➜ ", chemin.Select(n => n.Valeur.Nom));
 
             var glow = new DropShadowEffect
             {
@@ -187,16 +211,17 @@ namespace VisualisationWPF
                 Opacity = 0.8
             };
 
-            foreach ((Noeud<Station> a, Noeud<Station> b) in chemin.Zip(chemin.Skip(1), (x, y) => (x, y)))
+            foreach (var (a, b) in chemin.Zip(chemin.Skip(1), (x, y) => (x, y)))
             {
-                if (!positions.ContainsKey(a) || !positions.ContainsKey(b)) continue;
+                if (!positions.TryGetValue(a, out Point posA) || !positions.TryGetValue(b, out Point posB))
+                    continue;
 
                 var ligne = new Line
                 {
-                    X1 = positions[a].X,
-                    Y1 = positions[a].Y,
-                    X2 = positions[b].X,
-                    Y2 = positions[b].Y,
+                    X1 = posA.X,
+                    Y1 = posA.Y,
+                    X2 = posB.X,
+                    Y2 = posB.Y,
                     Stroke = Brushes.Red,
                     StrokeThickness = 4,
                     Effect = glow,
@@ -215,26 +240,21 @@ namespace VisualisationWPF
                 };
 
                 ligne.BeginAnimation(UIElement.OpacityProperty, fadeIn);
-
                 await Task.Delay(300);
             }
 
-            // Station de départ (vert foncé)
-            if (cerclesStations.ContainsKey(depart))
+            if (cerclesStations.TryGetValue(depart, out Ellipse cercleDepart))
             {
-                var ellipseDepart = cerclesStations[depart];
-                ellipseDepart.Fill = Brushes.DarkGreen;
-                ellipseDepart.Width = 12;
-                ellipseDepart.Height = 12;
+                cercleDepart.Fill = Brushes.Green;
+                cercleDepart.Width = 12;
+                cercleDepart.Height = 12;
             }
 
-            // Station d’arrivée (rouge clignotant)
-            if (cerclesStations.ContainsKey(arrivee))
+            if (cerclesStations.TryGetValue(arrivee, out Ellipse cercleArrivee))
             {
-                var ellipseArrivee = cerclesStations[arrivee];
-                ellipseArrivee.Fill = Brushes.Red;
-                ellipseArrivee.Width = 12;
-                ellipseArrivee.Height = 12;
+                cercleArrivee.Fill = Brushes.Red;
+                cercleArrivee.Width = 12;
+                cercleArrivee.Height = 12;
 
                 var clignote = new DoubleAnimation
                 {
@@ -245,39 +265,61 @@ namespace VisualisationWPF
                     RepeatBehavior = RepeatBehavior.Forever
                 };
 
-                ellipseArrivee.BeginAnimation(UIElement.OpacityProperty, clignote);
+                cercleArrivee.BeginAnimation(UIElement.OpacityProperty, clignote);
             }
+
+            progressChemin.Visibility = Visibility.Collapsed;
+
+
+            await Task.Delay(1000); // pause avant retour
+
+            foreach (var (a, b) in chemin.Reverse<Noeud<Station>>().Zip(chemin.Reverse<Noeud<Station>>().Skip(1), (x, y) => (x, y)))
+            {
+                if (!positions.TryGetValue(a, out Point posA) || !positions.TryGetValue(b, out Point posB))
+                    continue;
+
+                var ligneRetour = new Line
+                {
+                    X1 = posA.X,
+                    Y1 = posA.Y,
+                    X2 = posB.X,
+                    Y2 = posB.Y,
+                    Stroke = Brushes.LightBlue,
+                    StrokeThickness = 2,
+                    StrokeDashArray = new DoubleCollection { 4, 2 },
+                    Opacity = 0
+                };
+
+                canvasCarte.Children.Add(ligneRetour);
+
+                var fadeIn = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromMilliseconds(100)
+                };
+
+                ligneRetour.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+                await Task.Delay(150);
+            }
+
         }
 
 
-
-
-
-        private async void BtnAfficherChemin_Click(object sender, RoutedEventArgs e)
+        private void BtnExporter_Click(object sender, RoutedEventArgs e)
         {
-            string nomDepart = txtDepart.Text.Trim();
-            string nomArrivee = txtArrivee.Text.Trim();
-
-            // Recherche dans le graphe avec Noeud<Station>
-            var noeudDepart = graphe.Noeuds.FirstOrDefault(n =>
-                n.Valeur.Nom.Equals(nomDepart, StringComparison.OrdinalIgnoreCase));
-
-            var noeudArrivee = graphe.Noeuds.FirstOrDefault(n =>
-                n.Valeur.Nom.Equals(nomArrivee, StringComparison.OrdinalIgnoreCase));
-
-            if (noeudDepart == null || noeudArrivee == null)
+            if (txtListeStations.Text == "")
             {
-                MessageBox.Show("❌ Station de départ ou d’arrivée introuvable.");
+                MessageBox.Show("Aucun chemin à exporter.");
                 return;
             }
 
-            // Appel de ta méthode corrigée
-            await AfficherCheminPlusCourtAsync(noeudDepart, noeudArrivee);
+            var cheminText = txtListeStations.Text.Replace("🧭 Itinéraire :\n", "");
+
+            string cheminFichier = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "chemin_metro.txt");
+            File.WriteAllText(cheminFichier, cheminText);
+
+            MessageBox.Show($"Trajet exporté sur le bureau :\n{cheminFichier}");
         }
-
-
-
-
-
     }
 }

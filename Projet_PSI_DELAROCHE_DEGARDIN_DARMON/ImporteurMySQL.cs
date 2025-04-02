@@ -17,10 +17,10 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
             using var connection = new MySqlConnection(cheminSQL);
             connection.Open();
 
+            // Charger les stations
             var cmdStations = new MySqlCommand("SELECT * FROM stations", connection);
             using var readerStations = cmdStations.ExecuteReader();
 
-            
             while (readerStations.Read())
             {
                 int id = readerStations.GetInt32("id");
@@ -36,10 +36,9 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
                 noeuds[id] = noeud;
             }
 
-
             readerStations.Close();
 
-
+            // Charger les liaisons
             var cmdLiaisons = new MySqlCommand("SELECT * FROM liaisons", connection);
             using var readerLiaisons = cmdLiaisons.ExecuteReader();
 
@@ -65,6 +64,35 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
                 {
                     int changement = readerLiaisons.GetInt32("changement");
                     graphe.AjouterLien(noeuds[stationId], noeuds[stationId], changement);
+                }
+            }
+
+            readerLiaisons.Close();
+
+            // Charger les correspondances
+            var cmdCorrespondances = new MySqlCommand("SELECT * FROM correspondances", connection);
+            using var readerCorrespondances = cmdCorrespondances.ExecuteReader();
+
+            while (readerCorrespondances.Read())
+            {
+                int stationId = readerCorrespondances.GetInt32("station_id");
+                string ligneOrigine = readerCorrespondances.GetString("ligne_origine");
+                string ligneCorrespondance = readerCorrespondances.GetString("ligne_correspondance");
+                int tempsCorrespondance = readerCorrespondances.GetInt32("temps_correspondance");
+
+                // Trouver tous les noeuds de cette station dans les deux lignes
+                var noeudsLigne1 = graphe.Noeuds.Where(n => n.Valeur.Id == stationId && n.Valeur.Ligne == ligneOrigine);
+                var noeudsLigne2 = graphe.Noeuds.Where(n => n.Valeur.Id == stationId && n.Valeur.Ligne == ligneCorrespondance);
+
+                foreach (var n1 in noeudsLigne1)
+                {
+                    foreach (var n2 in noeudsLigne2)
+                    {
+                        if (!n1.Equals(n2))
+                        {
+                            graphe.AjouterLien(n1, n2, tempsCorrespondance);
+                        }
+                    }
                 }
             }
 
