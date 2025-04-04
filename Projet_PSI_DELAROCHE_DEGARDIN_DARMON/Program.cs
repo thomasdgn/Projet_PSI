@@ -4,115 +4,124 @@ using Projet_PSI_DELAROCHE_DEGARDIN_DARMON;
 using System.Windows;
 using static System.Net.Mime.MediaTypeNames;
 using System;
+using System.Text;
+using DocumentFormat.OpenXml.Drawing;
 
 public class Program
 {
     [STAThread] // WPF !
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
-        // Import données via MySQL :
+        Console.OutputEncoding = Encoding.UTF8; // Pour afficher correctement les caractères spéciaux
 
-        string cheminSQL = "server=localhost;user=root;password=root;database=metro;";
-
-        Graphe<Station> graphe = new Graphe<Station>();
-        ImporteurMySQL.Charger(cheminSQL, graphe);
-
-        // Choisis deux stations sur des lignes différentes mais avec correspondance
-        var depart = graphe.Noeuds.First(n => n.Valeur.Nom == "Châtelet" && n.Valeur.Ligne == "1");
-        var arrivee = graphe.Noeuds.First(n => n.Valeur.Nom == "Gare de Lyon" && n.Valeur.Ligne == "14");
-
-        var (chemin, cout) = graphe.Dijkstra(depart, arrivee);
-
-        Console.WriteLine("Itinéraire trouvé :");
-        if (chemin == null || chemin.Count == 0)
+        try
         {
-            Console.WriteLine("Aucun chemin trouvé entre les deux stations.");
-            Console.WriteLine("Coût total : N/A");
-        }
-        else
-        {
-            Console.WriteLine("Itinéraire trouvé :");
-            foreach (var station in chemin)
+            // Configuration de la connexion à la base de données
+            string server = "localhost";
+            string database = "metro";
+            string username = "root"; // À remplacer par votre nom d'utilisateur MySQL
+            string password = "root"; // À remplacer par votre mot de passe MySQL
+
+            Graphe<Station> graphe = await Task.Run(() => ImporteurMySQL.Charger());
+            Console.WriteLine(graphe.Liens.Count);
+
+            Console.WriteLine("=== TEST DU SERVICE DE DONNÉES MÉTRO ===");
+
+            // Créer une instance du service de données
+            ImporteurMySQL metroService = new ImporteurMySQL(server, database, username, password);
+
+            // Test de récupération de toutes les stations
+            Console.WriteLine("\n1. Récupération de toutes les stations:");
+            List<Station> stations = await metroService.GetAllStationsAsync();
+            Console.WriteLine($"Nombre de stations récupérées: {stations.Count}");
+
+            // Afficher quelques stations
+            int stationsToShow = Math.Min(5, stations.Count);
+            for (int i = 0; i < stationsToShow; i++)
             {
-                Console.WriteLine(station);
+                Console.WriteLine($"  - {stations[i]}");
             }
-            Console.WriteLine($"Coût total : {cout} minutes");
-        }
 
-        /*
-        Console.WriteLine("===== PLAN DU MÉTRO DE PARIS =====");
+            // Test de l'affichage des correspondances
+            Console.WriteLine("\n2. Test d'affichage des correspondances:");
+            await metroService.AfficherCorrespondancesAsync();
 
-        while (true)
-        {
-            Console.WriteLine("\nMenu :");
-            Console.WriteLine("1. Lister toutes les stations");
-            Console.WriteLine("2. Rechercher une station");
-            Console.WriteLine("3. Calculer un itinéraire (chemin le plus court)");
-            Console.WriteLine("4. Quitter");
-            Console.Write("Votre choix : ");
-            var choix = Console.ReadLine();
+            // Test de l'algorithme de Bellman-Ford
+            Console.WriteLine("\n3. Test de l'algorithme de Bellman-Ford:");
 
-            switch (choix)
+            // Choisir deux stations de test (ajustez selon vos données)
+            string stationDepart = "République";
+            string stationArrivee = "Nation";
+
+            Console.WriteLine($"Recherche du plus court chemin de {stationDepart} à {stationArrivee}...");
+            var resultBellmanFord = await metroService.BellmanFord(stationDepart, stationArrivee);
+
+            if (resultBellmanFord.shortestTime >= 0)
             {
-                case "1":
-                    ListerStations(graphe);
-                    break;
-                case "2":
-                    RechercherStation(graphe);
-                    break;
-                case "3":
-                    // CalculerItineraire(grapheMetro); (Clément doit s'en occuper)
-                    break;
-                case "4":
-                    Console.WriteLine("À bientôt !");
-                    return;
-                default:
-                    Console.WriteLine("Choix invalide.");
-                    break;
+                Console.WriteLine($"Temps de trajet le plus court: {resultBellmanFord.shortestTime} minutes");
+                Console.WriteLine("Itinéraire:");
+                foreach (var station in resultBellmanFord.path)
+                {
+                    Console.WriteLine($"  → {station}");
+                }
+            }
+
+            // Test de l'algorithme de Dijkstra
+            Console.WriteLine("\n4. Test de l'algorithme de Dijkstra:");
+            Console.WriteLine($"Recherche du plus court chemin de {stationDepart} à {stationArrivee}...");
+            var resultDijkstra = await metroService.Dijkstra(stationDepart, stationArrivee);
+
+            if (resultDijkstra.shortestTime >= 0)
+            {
+                Console.WriteLine($"Temps de trajet le plus court: {resultDijkstra.shortestTime} minutes");
+                Console.WriteLine("Itinéraire:");
+                foreach (var station in resultDijkstra.path)
+                {
+                    Console.WriteLine($"  → {station}");
+                }
+            }
+
+            // Test de l'algorithme de Floyd-Warshall
+            Console.WriteLine("\n5. Test de l'algorithme de Floyd-Warshall:");
+            Console.WriteLine($"Recherche du plus court chemin de {stationDepart} à {stationArrivee}...");
+            var resultFloydWarshall = await metroService.FloydWarshall(stationDepart, stationArrivee);
+
+            if (resultFloydWarshall.shortestTime >= 0)
+            {
+                Console.WriteLine($"Temps de trajet le plus court: {resultFloydWarshall.shortestTime} minutes");
+                Console.WriteLine("Itinéraire:");
+                foreach (var station in resultFloydWarshall.path)
+                {
+                    Console.WriteLine($"  → {station}");
+                }
+            }
+
+            // Comparer avec les autres algorithmes
+            if (resultBellmanFord.shortestTime >= 0 && resultDijkstra.shortestTime >= 0 && resultFloydWarshall.shortestTime >= 0)
+            {
+                if (resultBellmanFord.shortestTime == resultDijkstra.shortestTime && resultDijkstra.shortestTime == resultFloydWarshall.shortestTime)
+                {
+                    Console.WriteLine("\nLes trois algorithmes ont trouvé le même temps de trajet optimal!");
+                }
+                else
+                {
+                    Console.WriteLine("\nAttention: Les algorithmes ont trouvé des temps différents.");
+                    Console.WriteLine($"Bellman-Ford: {resultBellmanFord.shortestTime} minutes");
+                    Console.WriteLine($"Dijkstra: {resultDijkstra.shortestTime} minutes");
+                    Console.WriteLine($"Floyd-Warshall: {resultFloydWarshall.shortestTime} minutes");
+                }
             }
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"ERREUR: {ex.Message}");
+            Console.WriteLine(ex.StackTrace);
+        }
 
+        Console.WriteLine("\nAppuyez sur une touche pour quitter...");
+        Console.ReadKey();
     }
 
 
-    // Début de l'interface graphique :
 
-
-    static void ListerStations(Graphe<Station> graphe)
-    {
-        Console.WriteLine("\n--- Liste des stations ---");
-        foreach (var noeud in graphe.Noeuds)
-        {
-            Console.WriteLine($"- {noeud.Valeur}");
-        }
-    }
-
-
-    static void RechercherStation(Graphe<Station> graphe)
-    {
-        Console.Write("\nEntrez un mot-clé pour rechercher une station : ");
-        string saisie = Console.ReadLine()?.ToLower();
-
-        var resultats = graphe.Noeuds
-            .Where(n => n.Valeur.Nom.ToLower().Contains(saisie))
-            .Select(n => n.Valeur)
-            .ToList();
-
-        if (resultats.Count == 0)
-        {
-            Console.WriteLine("Aucune station trouvée.");
-        }
-        else
-        {
-            Console.WriteLine("Résultats :");
-            foreach (var station in resultats)
-            {
-                Console.WriteLine($"- {station}");
-            }
-        }
-
-        */
-    }
-
-        
 }

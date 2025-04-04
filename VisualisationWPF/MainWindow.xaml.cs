@@ -10,11 +10,13 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using Projet_PSI_DELAROCHE_DEGARDIN_DARMON;
 using System.IO;
+using static Google.Protobuf.Reflection.UninterpretedOption.Types;
 
 namespace VisualisationWPF
 {
     public partial class MainWindow : Window
     {
+        private ImporteurMySQL importeur;
         private Graphe<Station> graphe = new();
         private Dictionary<Noeud<Station>, Point> positions = new();
         private Dictionary<Noeud<Station>, Ellipse> cerclesStations = new();
@@ -49,30 +51,45 @@ namespace VisualisationWPF
         {
             progressChemin.Visibility = Visibility.Visible;
 
-            await Task.Run(() =>
+            try
             {
-                string conn = "server=localhost;user=root;password=root;database=metro;";
-                ImporteurMySQL.Charger(conn, graphe);
-            });
-
-            DessinerCarte(graphe);
-            progressChemin.Visibility = Visibility.Collapsed;
+                importeur = new ImporteurMySQL("localhost", "metro", "root", "root");
+                var result = await importeur.BuildStationGraphAsync();
+                graphe = new Graphe<Station>();
+                foreach (var noeud in result.Noeuds)
+                    graphe.AjouterNoeud(noeud);
+                foreach (var lien in result.Liens)
+                    graphe.AjouterLien(lien.Depart, lien.Arrivee, lien.Poids);
+                DessinerCarte(graphe);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement des données : {ex.Message}");
+            }
+            finally
+            {
+                progressChemin.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void DessinerCarte(Graphe<Station> graphe)
         {
+            // Vider le Canvas avant de redessiner la carte
             canvasCarte.Children.Clear();
             positions.Clear();
             cerclesStations.Clear();
 
+            // Calculer les limites géographiques du graphique
             double minLat = graphe.Noeuds.Min(n => n.Valeur.Latitude);
             double maxLat = graphe.Noeuds.Max(n => n.Valeur.Latitude);
             double minLon = graphe.Noeuds.Min(n => n.Valeur.Longitude);
             double maxLon = graphe.Noeuds.Max(n => n.Valeur.Longitude);
 
+            // Calculer la taille du Canvas
             double largeur = canvasCarte.ActualWidth > 0 ? canvasCarte.ActualWidth : canvasCarte.Width;
             double hauteur = canvasCarte.ActualHeight > 0 ? canvasCarte.ActualHeight : canvasCarte.Height;
 
+            // Dessiner les stations (cercles)
             foreach (var noeud in graphe.Noeuds)
             {
                 var s = noeud.Valeur;
@@ -108,17 +125,20 @@ namespace VisualisationWPF
                 canvasCarte.Children.Add(label);
             }
 
+            // Dessiner les liens entre les stations
             foreach (var lien in graphe.Liens)
             {
                 if (!positions.TryGetValue(lien.Depart, out Point posA) || !positions.TryGetValue(lien.Arrivee, out Point posB))
-                    continue;
+                    continue; // Si les positions des stations ne sont pas trouvées, on ignore cette arête
 
                 string ligneNom = lien.Depart.Valeur.Ligne.Trim().ToLower();
 
+                // Déterminer la couleur de l'arête en fonction de la ligne
                 Brush couleur = Brushes.Gray;
                 if (couleursLignes.TryGetValue(ligneNom, out var brush))
                     couleur = brush;
 
+                // Créer la ligne (l'arête) entre les deux stations
                 var ligne = new Line
                 {
                     X1 = posA.X,
@@ -128,13 +148,16 @@ namespace VisualisationWPF
                     Stroke = couleur,
                     StrokeThickness = 2.5,
                     ToolTip = $"Ligne {ligneNom.ToUpper()} : {lien.Depart.Valeur.Nom} ⇄ {lien.Arrivee.Valeur.Nom}"
-
                 };
 
+                // Ajouter la ligne (arête) au canvas
                 canvasCarte.Children.Add(ligne);
             }
-
         }
+
+
+
+
 
         private void BtnReinitialiserCarte_Click(object sender, RoutedEventArgs e)
         {
@@ -149,6 +172,14 @@ namespace VisualisationWPF
         {
             string departNom = txtDepart.Text.Trim();
             string arriveeNom = txtArrivee.Text.Trim();
+
+            if (comboAlgorithme.SelectedItem == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un algorithme.");
+                return;
+            }
+
+            BtnReinitialiserCarte_Click(null, null);
 
             var depart = graphe.Noeuds.FirstOrDefault(n => n.Valeur.Nom.Equals(departNom, StringComparison.OrdinalIgnoreCase));
             var arrivee = graphe.Noeuds.FirstOrDefault(n => n.Valeur.Nom.Equals(arriveeNom, StringComparison.OrdinalIgnoreCase));
@@ -168,29 +199,28 @@ namespace VisualisationWPF
 
             List<Noeud<Station>> chemin = null;
             int cout = int.MaxValue;
+            List<string> pathNames = new();
 
             string algo = ((ComboBoxItem)comboAlgorithme.SelectedItem).Content.ToString();
 
+            string nomDepart = depart.Valeur.Nom;
+            string nomArrivee = arrivee.Valeur.Nom;
+
+            var chrono = System.Diagnostics.Stopwatch.StartNew();
+
             if (algo == "Dijkstra")
-            {
-                (chemin, cout) = graphe.Dijkstra(depart, arrivee);
-            }
+                (cout, pathNames) = await importeur.Dijkstra(nomDepart, nomArrivee);
             else if (algo == "Bellman-Ford")
-            {
-                // 🧠 Appel indirect à Bellman-Ford (système basé sur ID)
-                var edges = Graphe<Station>.ExcelGraphLoader.LoadEdgesWithStationNames("MetroParis.xlsx");
-                if (!edges.nameToId.TryGetValue(depart.Valeur.Nom, out int idDep) ||
-                    !edges.nameToId.TryGetValue(arrivee.Valeur.Nom, out int idArr)) return;
+                (cout, pathNames) = await importeur.BellmanFord(nomDepart, nomArrivee);
+            else if (algo == "Floyd-Warshall")
+                (cout, pathNames) = await importeur.FloydWarshall(nomDepart, nomArrivee);
 
-                if (Graphe<Station>.BellmanFord.ComputeShortestPaths(edges.nameToId.Count, edges.edges, idDep, out int[] distances))
-                {
-                    cout = distances[idArr];
-                    chemin = graphe.Noeuds
-                        .Where(n => edges.nameToId.ContainsKey(n.Valeur.Nom)) // approx simplifiée
-                        .ToList();
-                }
-            }
+            chrono.Stop();
 
+            chemin = pathNames
+                .Select(nom => graphe.Noeuds.FirstOrDefault(n => $"{n.Valeur.Nom} ({n.Valeur.Ligne})" == nom))
+                .Where(n => n != null)
+                .ToList();
 
             if (chemin == null || chemin.Count < 2)
             {
@@ -200,110 +230,122 @@ namespace VisualisationWPF
                 return;
             }
 
-            txtTempsTotal.Text = $"🕒 Temps estimé : {cout} min";
+            txtTempsTotal.Text = $"🕒 Temps estimé : {cout} min ({chemin.Count - 1} arrêt(s))\nTemps calcul : {chrono.ElapsedMilliseconds} ms";
             txtListeStations.Text = "🧭 Itinéraire :\n" + string.Join(" ➜ ", chemin.Select(n => n.Valeur.Nom));
 
-            var glow = new DropShadowEffect
-            {
-                Color = Colors.Red,
-                BlurRadius = 10,
-                ShadowDepth = 0,
-                Opacity = 0.8
-            };
-
-            foreach (var (a, b) in chemin.Zip(chemin.Skip(1), (x, y) => (x, y)))
-            {
-                if (!positions.TryGetValue(a, out Point posA) || !positions.TryGetValue(b, out Point posB))
-                    continue;
-
-                var ligne = new Line
-                {
-                    X1 = posA.X,
-                    Y1 = posA.Y,
-                    X2 = posB.X,
-                    Y2 = posB.Y,
-                    Stroke = Brushes.Red,
-                    StrokeThickness = 4,
-                    Effect = glow,
-                    StrokeStartLineCap = PenLineCap.Round,
-                    StrokeEndLineCap = PenLineCap.Round,
-                    Opacity = 0
-                };
-
-                canvasCarte.Children.Add(ligne);
-
-                var fadeIn = new DoubleAnimation
-                {
-                    From = 0,
-                    To = 1,
-                    Duration = TimeSpan.FromMilliseconds(200)
-                };
-
-                ligne.BeginAnimation(UIElement.OpacityProperty, fadeIn);
-                await Task.Delay(300);
-            }
-
-            if (cerclesStations.TryGetValue(depart, out Ellipse cercleDepart))
-            {
-                cercleDepart.Fill = Brushes.Green;
-                cercleDepart.Width = 12;
-                cercleDepart.Height = 12;
-            }
-
-            if (cerclesStations.TryGetValue(arrivee, out Ellipse cercleArrivee))
-            {
-                cercleArrivee.Fill = Brushes.Red;
-                cercleArrivee.Width = 12;
-                cercleArrivee.Height = 12;
-
-                var clignote = new DoubleAnimation
-                {
-                    From = 1,
-                    To = 0.2,
-                    Duration = TimeSpan.FromMilliseconds(500),
-                    AutoReverse = true,
-                    RepeatBehavior = RepeatBehavior.Forever
-                };
-
-                cercleArrivee.BeginAnimation(UIElement.OpacityProperty, clignote);
-            }
+            await AnimerChemin(chemin);
 
             progressChemin.Visibility = Visibility.Collapsed;
 
+            AfficherGraphiqueComparatif(nomDepart, nomArrivee);
+        }
 
-            await Task.Delay(1000); // pause avant retour
 
-            foreach (var (a, b) in chemin.Reverse<Noeud<Station>>().Zip(chemin.Reverse<Noeud<Station>>().Skip(1), (x, y) => (x, y)))
+
+
+        private async Task AnimerChemin(List<Noeud<Station>> chemin)
+        {
+            for (int i = 0; i < chemin.Count - 1; i++)
             {
-                if (!positions.TryGetValue(a, out Point posA) || !positions.TryGetValue(b, out Point posB))
-                    continue;
+                var a = chemin[i];
+                var b = chemin[i + 1];
 
-                var ligneRetour = new Line
+                var ligne = canvasCarte.Children.OfType<Line>().FirstOrDefault(l =>
+                    (Math.Abs(l.X1 - positions[a].X) < 0.1 && Math.Abs(l.Y1 - positions[a].Y) < 0.1 &&
+                     Math.Abs(l.X2 - positions[b].X) < 0.1 && Math.Abs(l.Y2 - positions[b].Y) < 0.1) ||
+                    (Math.Abs(l.X2 - positions[a].X) < 0.1 && Math.Abs(l.Y2 - positions[a].Y) < 0.1 &&
+                     Math.Abs(l.X1 - positions[b].X) < 0.1 && Math.Abs(l.Y1 - positions[b].Y) < 0.1));
+
+                if (ligne != null)
                 {
-                    X1 = posA.X,
-                    Y1 = posA.Y,
-                    X2 = posB.X,
-                    Y2 = posB.Y,
-                    Stroke = Brushes.LightBlue,
-                    StrokeThickness = 2,
-                    StrokeDashArray = new DoubleCollection { 4, 2 },
-                    Opacity = 0
-                };
+                    var originalStroke = ligne.Stroke;
+                    var brush = new SolidColorBrush(Colors.White);
+                    ligne.Stroke = brush;
 
-                canvasCarte.Children.Add(ligneRetour);
+                    var colorAnim = new ColorAnimation
+                    {
+                        From = Colors.White,
+                        To = Colors.Red,
+                        AutoReverse = true,
+                        Duration = TimeSpan.FromMilliseconds(200),
+                        RepeatBehavior = new RepeatBehavior(3)
+                    };
 
-                var fadeIn = new DoubleAnimation
-                {
-                    From = 0,
-                    To = 1,
-                    Duration = TimeSpan.FromMilliseconds(100)
-                };
+                    brush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnim);
 
-                ligneRetour.BeginAnimation(UIElement.OpacityProperty, fadeIn);
-                await Task.Delay(150);
+                    ligne.StrokeThickness = 5;
+
+                    ligne.Effect = new DropShadowEffect
+                    {
+                        Color = Colors.Red,
+                        BlurRadius = 25,
+                        ShadowDepth = 0,
+                        Opacity = 1
+                    };
+                }
+
+                await Task.Delay(200);
             }
 
+            // Ensuite, stations en mode glow
+            foreach (var noeud in chemin)
+            {
+                if (cerclesStations.TryGetValue(noeud, out Ellipse cercle))
+                {
+                    var brush = new SolidColorBrush(Colors.White);
+                    cercle.Fill = brush;
+
+                    var colorAnim = new ColorAnimation
+                    {
+                        From = Colors.White,
+                        To = Colors.Red,
+                        Duration = TimeSpan.FromMilliseconds(300),
+                        AutoReverse = true,
+                        RepeatBehavior = new RepeatBehavior(2)
+                    };
+
+                    brush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnim);
+
+                    cercle.Effect = new DropShadowEffect
+                    {
+                        Color = Colors.Red,
+                        BlurRadius = 20,
+                        ShadowDepth = 0,
+                        Opacity = 1
+                    };
+                }
+                await Task.Delay(80);
+            }
         }
+
+
+
+
+
+        private async void AfficherGraphiqueComparatif(string depart, string arrivee)
+        {
+            var chrono = new System.Diagnostics.Stopwatch();
+            var resultats = new Dictionary<string, long>();
+
+            foreach (var algo in new[] { "Dijkstra", "Bellman-Ford", "Floyd-Warshall" })
+            {
+                chrono.Restart();
+                if (algo == "Dijkstra")
+                    await importeur.Dijkstra(depart, arrivee);
+                else if (algo == "Bellman-Ford")
+                    await importeur.BellmanFord(depart, arrivee);
+                else if (algo == "Floyd-Warshall")
+                    await importeur.FloydWarshall(depart, arrivee);
+                chrono.Stop();
+
+                resultats[algo] = chrono.ElapsedMilliseconds;
+            }
+
+            string message = "⏱ Temps de calcul par algorithme (ms) :\n" + string.Join("\n", resultats.Select(kvp => $"- {kvp.Key} : {kvp.Value} ms"));
+            MessageBox.Show(message, "Comparaison des algorithmes");
+        }
+
+
 
 
         private void BtnExporter_Click(object sender, RoutedEventArgs e)

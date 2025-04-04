@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Projet_PSI_DELAROCHE_DEGARDIN_DARMON")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b63c8da54f371374de001b5f3d93ce310eaa950")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b3e536c0c3c927f73b4be3b9d6054e9c79b22299")]
 [assembly: System.Reflection.AssemblyProductAttribute("Projet_PSI_DELAROCHE_DEGARDIN_DARMON")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Projet_PSI_DELAROCHE_DEGARDIN_DARMON")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -3,47 +3,78 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Carte du métro" Height="800" Width="1000"
         Background="#222">
+
     <Grid>
 
-        <!-- Définir deux lignes : barre de contrôles + carte -->
+        <!-- Lignes : Contrôles (haut) + Carte (centre) -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- BARRE DE CONTROLES -->
+        <!-- 🧭 Barre de Contrôle -->
         <Border Background="#333" Padding="10" Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Margin="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
+
+                <!-- 🟢 Départ -->
+                <StackPanel Margin="10,0">
                     <TextBlock Text="Station de départ" Foreground="White" Margin="0,0,0,5"/>
                     <TextBox x:Name="txtDepart" Width="150"/>
                 </StackPanel>
-                <StackPanel Margin="5">
+
+                <!-- 🔴 Arrivée -->
+                <StackPanel Margin="10,0">
                     <TextBlock Text="Station d’arrivée" Foreground="White" Margin="0,0,0,5"/>
                     <TextBox x:Name="txtArrivee" Width="150"/>
                 </StackPanel>
-                <Button Content="Afficher chemin" Click="BtnAfficherChemin_Click" Margin="10,20,0,0"/>
-                <Button Content="Réinitialiser" Click="BtnReinitialiserCarte_Click" Margin="10,20,0,0"/>
-                <ComboBox x:Name="comboAlgorithme" Width="150" Margin="10,20,0,0" SelectedIndex="0">
+
+                <!-- ▶️ Bouton Afficher -->
+                <Button Content="Afficher chemin"
+                        Click="BtnAfficherChemin_Click"
+                        Margin="15,20,0,0" Padding="10,5"/>
+
+                <!-- 🔁 Bouton Réinitialiser -->
+                <Button Content="Réinitialiser"
+                        Click="BtnReinitialiserCarte_Click"
+                        Margin="10,20,0,0" Padding="10,5"/>
+
+                <!-- 🧠 ComboBox Algorithmes -->
+                <ComboBox x:Name="comboAlgorithme"
+                          Width="150"
+                          Margin="15,20,0,0"
+                          SelectedIndex="0">
                     <ComboBoxItem>Dijkstra</ComboBoxItem>
                     <ComboBoxItem>Bellman-Ford</ComboBoxItem>
+                    <ComboBoxItem>Floyd-Warshall</ComboBoxItem>
                 </ComboBox>
-                <Button Content="Exporter Trajet" Click="BtnExporter_Click" Margin="10,20,0,0"/>
-                <ProgressBar x:Name="progressChemin" Width="150" Height="12"
-                             IsIndeterminate="True" Visibility="Collapsed" Margin="20,25,0,0"/>
+
+                <!-- 📤 Export -->
+                <Button Content="Exporter Trajet"
+                        Click="BtnExporter_Click"
+                        Margin="15,20,0,0" Padding="10,5"/>
+
+                <!-- ⏳ Barre de progression -->
+                <ProgressBar x:Name="progressChemin"
+                             Width="150" Height="12"
+                             IsIndeterminate="True"
+                             Visibility="Collapsed"
+                             Margin="20,25,0,0"/>
             </StackPanel>
         </Border>
 
-        <!-- ZONE DE CARTE -->
+        <!-- 🗺️ Zone Carte -->
         <Grid Grid.Row="1">
             <Canvas x:Name="canvasCarte"/>
-            <!-- Résultats -->
+
+            <!-- 🕒 Temps total -->
             <TextBlock x:Name="txtTempsTotal"
                        FontSize="16"
                        Foreground="White"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Bottom"
                        Margin="0,0,0,20"/>
+
+            <!-- 📋 Liste stations -->
             <TextBlock x:Name="txtListeStations"
                        FontSize="12"
                        Foreground="White"

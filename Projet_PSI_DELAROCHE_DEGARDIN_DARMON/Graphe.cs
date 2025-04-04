@@ -233,91 +233,43 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
         }
 
 
-
-        // Algorithme de Bellman-Ford : Refaire en utilisant la base de données SQL !
-
-        // Représente une arête orientée avec un poids
-        public readonly record struct Edge(int From, int To, int Weight);
-
-        public static class ExcelGraphLoader
+        public void AfficherCorrespondances()
         {
-            public static (List<Edge> edges, Dictionary<string, int> nameToId, Dictionary<int, string> idToName)
-            LoadEdgesWithStationNames(string filePath, string sheetName = "Arcs")
+            Console.WriteLine("===== CORRESPONDANCES DANS LE RÉSEAU DE MÉTRO =====");
+
+            // Utiliser un ensemble pour éviter les duplicatas
+            var correspondancesAffichees = new HashSet<(string, string, string, int)>();
+
+            foreach (var noeud in Noeuds)
             {
-                var edges = new List<Edge>();
-                var nameToId = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-                var idToName = new Dictionary<int, string>();
-                int currentId = 0;
-
-                using var workbook = new XLWorkbook(filePath);
-                var sheet = workbook.Worksheet(sheetName);
-                var rows = sheet.RangeUsed().RowsUsed().Skip(1); // Ignore l’en-tête
-
-                foreach (var row in rows)
+                var station = noeud.Valeur as Station;
+                if (station != null)
                 {
-                    string fromStation = row.Cell(3).GetString().Trim();
-                    string toStation = row.Cell(4).GetString().Trim();
-                    int weight = (int)row.Cell(5).GetDouble();
-
-                    if (!nameToId.ContainsKey(fromStation))
-                    {
-                        nameToId[fromStation] = currentId;
-                        idToName[currentId] = fromStation;
-                        currentId++;
-                    }
-
-                    if (!nameToId.ContainsKey(toStation))
-                    {
-                        nameToId[toStation] = currentId;
-                        idToName[currentId] = toStation;
-                        currentId++;
-                    }
-
-                    edges.Add(new Edge(nameToId[fromStation], nameToId[toStation], weight));
-                }
-
-                return (edges, nameToId, idToName);
-            }
-        }
-
-        public static class BellmanFord
-        {
-            public static bool ComputeShortestPaths(int nodeCount, List<Edge> edges, int source, out int[] distances)
-            {
-                distances = Enumerable.Repeat(int.MaxValue, nodeCount).ToArray();
-                distances[source] = 0;
-
-                for (int i = 0; i < nodeCount - 1; i++)
-                {
-                    bool updated = false;
-
-                    foreach (var (from, to, weight) in edges)
-                    {
-                        if (distances[from] != int.MaxValue && distances[from] + weight < distances[to])
+                    var correspondances = ListeAdjacence[noeud]
+                        .Where(adjacent => (adjacent.Valeur as Station).Ligne != station.Ligne)
+                        .Select(adjacent => new
                         {
-                            distances[to] = distances[from] + weight;
-                            updated = true;
+                            Station = (adjacent.Valeur as Station).Nom,
+                            Ligne = (adjacent.Valeur as Station).Ligne,
+                            Temps = MatriceAdjacence[(noeud, adjacent)]
+                        })
+                        .ToList();
+
+                    foreach (var correspondance in correspondances)
+                    {
+                        var clef = (station.Nom, correspondance.Station, station.Ligne, correspondance.Temps);
+                        var clefInverse = (correspondance.Station, station.Nom, correspondance.Ligne, correspondance.Temps);
+
+                        // Vérifier si la correspondance ou son inverse a déjà été affichée
+                        if (!correspondancesAffichees.Contains(clef) && !correspondancesAffichees.Contains(clefInverse))
+                        {
+                            Console.WriteLine($"Station: {station.Nom} ({station.Ligne})");
+                            Console.WriteLine($"  -> Correspondance avec {correspondance.Station} ({correspondance.Ligne}) en {correspondance.Temps} minutes");
+                            correspondancesAffichees.Add(clef);
                         }
                     }
-
-                    if (!updated) break;
                 }
-
-                foreach (var (from, to, weight) in edges)
-                {
-                    if (distances[from] != int.MaxValue && distances[from] + weight < distances[to])
-                        return false; // Cycle négatif détecté
-                }
-
-                return true;
             }
-
-
-        }
-
-
-
-        // Partie Clément : Dijkstra et autre algo jsplus le nom
-
+        }  
     }
 }
