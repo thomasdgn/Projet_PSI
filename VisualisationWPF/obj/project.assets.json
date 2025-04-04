@@ -80,35 +80,6 @@
           }
         }
       },
-      "ExcelDataReader/3.7.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.1/ExcelDataReader.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.1/ExcelDataReader.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "ExcelDataReader.DataSet/3.7.0": {
-        "type": "package",
-        "dependencies": {
-          "ExcelDataReader": "3.7.0"
-        },
-        "compile": {
-          "lib/netstandard2.1/ExcelDataReader.DataSet.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.1/ExcelDataReader.DataSet.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
       "ExcelNumberFormat/1.1.0": {
         "type": "package",
         "compile": {
@@ -627,22 +598,13 @@
       },
       "Projet_PSI_DELAROCHE_DEGARDIN_DARMON/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "dependencies": {
-          "ClosedXML": "0.104.2",
-          "ExcelDataReader": "3.7.0",
-          "ExcelDataReader.DataSet": "3.7.0",
-          "MySql.Data": "9.2.0"
-        },
+        "framework": "Unsupported,Version=v0.0",
         "compile": {
           "bin/placeholder/Projet_PSI_DELAROCHE_DEGARDIN_DARMON.dll": {}
         },
         "runtime": {
           "bin/placeholder/Projet_PSI_DELAROCHE_DEGARDIN_DARMON.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WPF"
-        ]
+        }
       }
     }
   },
@@ -747,50 +709,6 @@
         "lib/net8.0/DocumentFormat.OpenXml.Framework.xml",
         "lib/netstandard2.0/DocumentFormat.OpenXml.Framework.dll",
         "lib/netstandard2.0/DocumentFormat.OpenXml.Framework.xml"
-      ]
-    },
-    "ExcelDataReader/3.7.0": {
-      "sha512": "AMv3oDETRHSRyXC17rBtKH45qIfFyo433LMeaMB3u4RNr/c9Luuc0Z+JMP6+3Cx9n4wXqFqcrEIVxrf/GgYnZg==",
-      "type": "package",
-      "path": "exceldatareader/3.7.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ExcelDataReader.png",
-        "README.md",
-        "exceldatareader.3.7.0.nupkg.sha512",
-        "exceldatareader.nuspec",
-        "lib/net462/ExcelDataReader.dll",
-        "lib/net462/ExcelDataReader.pdb",
-        "lib/net462/ExcelDataReader.xml",
-        "lib/netstandard2.0/ExcelDataReader.dll",
-        "lib/netstandard2.0/ExcelDataReader.pdb",
-        "lib/netstandard2.0/ExcelDataReader.xml",
-        "lib/netstandard2.1/ExcelDataReader.dll",
-        "lib/netstandard2.1/ExcelDataReader.pdb",
-        "lib/netstandard2.1/ExcelDataReader.xml"
-      ]
-    },
-    "ExcelDataReader.DataSet/3.7.0": {
-      "sha512": "zA2/CVzbMspkNg0qf0/Zp+eU6VxYP5PtiJSErLDP46d/Y7F6of/NCcSGeXjs97KDq7UiEf6XJe+89s/92n2GYg==",
-      "type": "package",
-      "path": "exceldatareader.dataset/3.7.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ExcelDataReader.png",
-        "README.md",
-        "exceldatareader.dataset.3.7.0.nupkg.sha512",
-        "exceldatareader.dataset.nuspec",
-        "lib/net462/ExcelDataReader.DataSet.dll",
-        "lib/net462/ExcelDataReader.DataSet.pdb",
-        "lib/net462/ExcelDataReader.DataSet.xml",
-        "lib/netstandard2.0/ExcelDataReader.DataSet.dll",
-        "lib/netstandard2.0/ExcelDataReader.DataSet.pdb",
-        "lib/netstandard2.0/ExcelDataReader.DataSet.xml",
-        "lib/netstandard2.1/ExcelDataReader.DataSet.dll",
-        "lib/netstandard2.1/ExcelDataReader.DataSet.pdb",
-        "lib/netstandard2.1/ExcelDataReader.DataSet.xml"
       ]
     },
     "ExcelNumberFormat/1.1.0": {
@@ -1992,23 +1910,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\degar\\.nuget\\packages\\": {},
+    "C:\\Users\\cleme\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\VisualisationWPF\\VisualisationWPF.csproj",
+      "projectUniqueName": "C:\\A2 ESILV\\SEMESTRE2\\LIV'IN'PARIS\\RENDU2\\VisualisationWPF\\VisualisationWPF.csproj",
       "projectName": "VisualisationWPF",
-      "projectPath": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\VisualisationWPF\\VisualisationWPF.csproj",
-      "packagesPath": "C:\\Users\\degar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\VisualisationWPF\\obj\\",
+      "projectPath": "C:\\A2 ESILV\\SEMESTRE2\\LIV'IN'PARIS\\RENDU2\\VisualisationWPF\\VisualisationWPF.csproj",
+      "packagesPath": "C:\\Users\\cleme\\.nuget\\packages\\",
+      "outputPath": "C:\\A2 ESILV\\SEMESTRE2\\LIV'IN'PARIS\\RENDU2\\VisualisationWPF\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\degar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\cleme\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2023,8 +1941,8 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj": {
-              "projectPath": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj"
+            "C:\\A2 ESILV\\SEMESTRE2\\LIV'IN'PARIS\\RENDU2\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj": {
+              "projectPath": "C:\\A2 ESILV\\SEMESTRE2\\LIV'IN'PARIS\\RENDU2\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj"
             }
           }
         }
@@ -2037,7 +1955,7 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
       "SdkAnalysisLevel": "9.0.100"
     },
@@ -2073,8 +1991,19 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Le projet Projet_PSI_DELAROCHE_DEGARDIN_DARMON n'est pas compatible avec net8.0-windows7.0 (.NETCoreApp,Version=v8.0). Le projet Projet_PSI_DELAROCHE_DEGARDIN_DARMON prend en charge : net8.0-windows8.0 (.NETCoreApp,Version=v8.0)",
+      "libraryId": "Projet_PSI_DELAROCHE_DEGARDIN_DARMON",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    }
+  ]
 }

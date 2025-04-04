@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net8.0-windows7.0": {
+    "net8.0-windows8.0": {
       "BouncyCastle.Cryptography/2.3.1": {
         "type": "package",
         "compile": {
@@ -1961,7 +1961,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net8.0-windows7.0": [
+    "net8.0-windows8.0": [
       "ClosedXML >= 0.104.2",
       "ExcelDataReader >= 3.7.0",
       "ExcelDataReader.DataSet >= 3.7.0",
@@ -1969,36 +1969,36 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\degar\\.nuget\\packages\\": {},
+    "C:\\Users\\cleme\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj",
+      "projectUniqueName": "C:\\A2 ESILV\\SEMESTRE2\\LIV'IN'PARIS\\RENDU2\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj",
       "projectName": "Projet_PSI_DELAROCHE_DEGARDIN_DARMON",
-      "projectPath": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj",
-      "packagesPath": "C:\\Users\\degar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\obj\\",
+      "projectPath": "C:\\A2 ESILV\\SEMESTRE2\\LIV'IN'PARIS\\RENDU2\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj",
+      "packagesPath": "C:\\Users\\cleme\\.nuget\\packages\\",
+      "outputPath": "C:\\A2 ESILV\\SEMESTRE2\\LIV'IN'PARIS\\RENDU2\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\degar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\cleme\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net8.0-windows"
+        "net8.0-windows8.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net8.0-windows7.0": {
-          "targetAlias": "net8.0-windows",
+        "net8.0-windows8.0": {
+          "targetAlias": "net8.0-windows8.0",
           "projectReferences": {}
         }
       },
@@ -2010,13 +2010,13 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
       "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
-      "net8.0-windows7.0": {
-        "targetAlias": "net8.0-windows",
+      "net8.0-windows8.0": {
+        "targetAlias": "net8.0-windows8.0",
         "dependencies": {
           "ClosedXML": {
             "target": "Package",
@@ -2054,7 +2054,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
