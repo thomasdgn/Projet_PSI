@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\VisualisationWPF\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{05756ECB-DE57-4BEA-A9BC-9E7911D1F996}|VisualisationWPF.csproj|c:\\users\\degar\\onedrive\\bureau\\projet github\\essai solo\\projet_psi\\visualisationwpf\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{05756ECB-DE57-4BEA-A9BC-9E7911D1F996}|VisualisationWPF.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{05756ECB-DE57-4BEA-A9BC-9E7911D1F996}|VisualisationWPF.csproj|c:\\users\\degar\\onedrive\\bureau\\projet github\\essai solo\\projet_psi\\visualisationwpf\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{05756ECB-DE57-4BEA-A9BC-9E7911D1F996}|VisualisationWPF.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{05756ECB-DE57-4BEA-A9BC-9E7911D1F996}|VisualisationWPF.csproj|c:\\users\\degar\\onedrive\\bureau\\projet github\\essai solo\\projet_psi\\visualisationwpf\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{05756ECB-DE57-4BEA-A9BC-9E7911D1F996}|VisualisationWPF.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05756ECB-DE57-4BEA-A9BC-9E7911D1F996}|VisualisationWPF.csproj|c:\\users\\degar\\onedrive\\bureau\\projet github\\essai solo\\projet_psi\\visualisationwpf\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{05756ECB-DE57-4BEA-A9BC-9E7911D1F996}|VisualisationWPF.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{85931371-D8C9-49B3-9266-00C411E7D0C9}|..\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON\\Projet_PSI_DELAROCHE_DEGARDIN_DARMON.csproj|c:\\users\\degar\\onedrive\\bureau\\projet github\\essai solo\\projet_psi\\projet_psi_delaroche_degardin_darmon\\importeurmysql.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -43,7 +43,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -63,7 +63,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\VisualisationWPF\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -75,20 +75,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\VisualisationWPF\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\VisualisationWPF\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAALQAAAAAAAAAAAAAAMYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFsBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-03T15:30:59.192Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\Users\\degar\\OneDrive\\Bureau\\Projet GitHub\\Essai solo\\Projet_PSI\\VisualisationWPF\\App.xaml.cs",
               "RelativeDocumentMoniker": "App.xaml.cs",
