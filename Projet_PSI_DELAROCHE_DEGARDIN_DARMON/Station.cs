@@ -36,7 +36,7 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
             return $"{Nom} ({Ligne})";
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is Station other &&
                    Id == other.Id;

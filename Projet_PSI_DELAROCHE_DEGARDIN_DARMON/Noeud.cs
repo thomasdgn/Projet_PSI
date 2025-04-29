@@ -21,14 +21,14 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
             return Valeur?.ToString() ?? "null";
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is Noeud<T> autre && EqualityComparer<T>.Default.Equals(Valeur, autre.Valeur);
         }
 
         public override int GetHashCode()
         {
-            return EqualityComparer<T>.Default.GetHashCode(Valeur);
+            return Valeur != null ? EqualityComparer<T>.Default.GetHashCode(Valeur) : 0;
         }
     }
 }

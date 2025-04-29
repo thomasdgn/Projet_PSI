@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+
 
 namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
 {
@@ -19,6 +21,7 @@ namespace Projet_PSI_DELAROCHE_DEGARDIN_DARMON
         public int TempsCorrespondance { get { return tempsCorrespondance; } }
 
 
+        public Correspondance() { }
         public Correspondance(string station, string ligne1, string ligne2, int temps)
         {
             this.station = station;

@@ -1,16 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MySql.Data.MySqlClient;
 using Projet_PSI_DELAROCHE_DEGARDIN_DARMON;
-using System.Windows;
-using static System.Net.Mime.MediaTypeNames;
-using System;
 using System.Text;
-using DocumentFormat.OpenXml.Drawing;
 
 public class Program
 {
     [STAThread] // WPF !
-    static async Task Main(string[] args)
+    static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8; // Pour afficher correctement les caractères spéciaux
 
@@ -19,21 +15,29 @@ public class Program
             // Configuration de la connexion à la base de données
             string server = "localhost";
             string database = "metro";
-            string username = "root"; // À remplacer par votre nom d'utilisateur MySQL
-            string password = "root"; // À remplacer par votre mot de passe MySQL
+            string username = "root";
+            string password = "root";
 
-            Graphe<Station> graphe = await Task.Run(() => ImporteurMySQL.Charger());
-            Console.WriteLine(graphe.Liens.Count);
+            string connectionString = $"Server={server};Database={database};User ID={username};Password={password};";
+
+            // Charger le graphe directement en synchrone
+            Graphe<Station> graphe = ImporteurMySQL.Charger();
+            Console.WriteLine($"Nombre de liens dans le graphe : {graphe.Liens.Count}");
 
             Console.WriteLine("=== TEST DU SERVICE DE DONNÉES MÉTRO ===");
 
-            // Créer une instance du service de données
+            // Créer une instance du service
             ImporteurMySQL metroService = new ImporteurMySQL(server, database, username, password);
 
             // Test de récupération de toutes les stations
             Console.WriteLine("\n1. Récupération de toutes les stations:");
-            List<Station> stations = await metroService.GetAllStationsAsync();
+            List<Station> stations = metroService.GetAllStations();
             Console.WriteLine($"Nombre de stations récupérées: {stations.Count}");
+            foreach (var station in stations)
+            {
+                Console.WriteLine($"Station importée : {station.Nom} ({station.Ligne}) - {station.Latitude},{station.Longitude}");
+            }
+
 
             // Afficher quelques stations
             int stationsToShow = Math.Min(5, stations.Count);
@@ -44,72 +48,50 @@ public class Program
 
             // Test de l'affichage des correspondances
             Console.WriteLine("\n2. Test d'affichage des correspondances:");
-            await metroService.AfficherCorrespondancesAsync();
+            metroService.AfficherCorrespondances();
 
-            // Test de l'algorithme de Bellman-Ford
-            Console.WriteLine("\n3. Test de l'algorithme de Bellman-Ford:");
+            // Test des algorithmes de trajets
+            Console.WriteLine("\n3. Test des algorithmes de trajets:");
 
-            // Choisir deux stations de test (ajustez selon vos données)
             string stationDepart = "République";
             string stationArrivee = "Nation";
 
-            Console.WriteLine($"Recherche du plus court chemin de {stationDepart} à {stationArrivee}...");
-            var resultBellmanFord = await metroService.BellmanFord(stationDepart, stationArrivee);
-
+            Console.WriteLine($"\nBellman-Ford de {stationDepart} à {stationArrivee}:");
+            var resultBellmanFord = metroService.BellmanFord(stationDepart, stationArrivee);
             if (resultBellmanFord.shortestTime >= 0)
             {
-                Console.WriteLine($"Temps de trajet le plus court: {resultBellmanFord.shortestTime} minutes");
-                Console.WriteLine("Itinéraire:");
+                Console.WriteLine($"Temps: {resultBellmanFord.shortestTime} min");
                 foreach (var station in resultBellmanFord.path)
-                {
                     Console.WriteLine($"  → {station}");
-                }
             }
 
-            // Test de l'algorithme de Dijkstra
-            Console.WriteLine("\n4. Test de l'algorithme de Dijkstra:");
-            Console.WriteLine($"Recherche du plus court chemin de {stationDepart} à {stationArrivee}...");
-            var resultDijkstra = await metroService.Dijkstra(stationDepart, stationArrivee);
-
+            Console.WriteLine($"\nDijkstra de {stationDepart} à {stationArrivee}:");
+            var resultDijkstra = metroService.Dijkstra(stationDepart, stationArrivee);
             if (resultDijkstra.shortestTime >= 0)
             {
-                Console.WriteLine($"Temps de trajet le plus court: {resultDijkstra.shortestTime} minutes");
-                Console.WriteLine("Itinéraire:");
+                Console.WriteLine($"Temps: {resultDijkstra.shortestTime} min");
                 foreach (var station in resultDijkstra.path)
-                {
                     Console.WriteLine($"  → {station}");
-                }
             }
 
-            // Test de l'algorithme de Floyd-Warshall
-            Console.WriteLine("\n5. Test de l'algorithme de Floyd-Warshall:");
-            Console.WriteLine($"Recherche du plus court chemin de {stationDepart} à {stationArrivee}...");
-            var resultFloydWarshall = await metroService.FloydWarshall(stationDepart, stationArrivee);
-
+            Console.WriteLine($"\nFloyd-Warshall de {stationDepart} à {stationArrivee}:");
+            var resultFloydWarshall = metroService.FloydWarshall(stationDepart, stationArrivee);
             if (resultFloydWarshall.shortestTime >= 0)
             {
-                Console.WriteLine($"Temps de trajet le plus court: {resultFloydWarshall.shortestTime} minutes");
-                Console.WriteLine("Itinéraire:");
+                Console.WriteLine($"Temps: {resultFloydWarshall.shortestTime} min");
                 foreach (var station in resultFloydWarshall.path)
-                {
                     Console.WriteLine($"  → {station}");
-                }
             }
 
-            // Comparer avec les autres algorithmes
-            if (resultBellmanFord.shortestTime >= 0 && resultDijkstra.shortestTime >= 0 && resultFloydWarshall.shortestTime >= 0)
+            // Comparaison finale
+            if (resultBellmanFord.shortestTime == resultDijkstra.shortestTime &&
+                resultDijkstra.shortestTime == resultFloydWarshall.shortestTime)
             {
-                if (resultBellmanFord.shortestTime == resultDijkstra.shortestTime && resultDijkstra.shortestTime == resultFloydWarshall.shortestTime)
-                {
-                    Console.WriteLine("\nLes trois algorithmes ont trouvé le même temps de trajet optimal!");
-                }
-                else
-                {
-                    Console.WriteLine("\nAttention: Les algorithmes ont trouvé des temps différents.");
-                    Console.WriteLine($"Bellman-Ford: {resultBellmanFord.shortestTime} minutes");
-                    Console.WriteLine($"Dijkstra: {resultDijkstra.shortestTime} minutes");
-                    Console.WriteLine($"Floyd-Warshall: {resultFloydWarshall.shortestTime} minutes");
-                }
+                Console.WriteLine("\nTous les algorithmes donnent le même résultat !");
+            }
+            else
+            {
+                Console.WriteLine("\nAttention, résultats différents selon l'algorithme !");
             }
         }
         catch (Exception ex)
@@ -121,7 +103,4 @@ public class Program
         Console.WriteLine("\nAppuyez sur une touche pour quitter...");
         Console.ReadKey();
     }
-
-
-
 }
